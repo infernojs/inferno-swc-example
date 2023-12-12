@@ -3,13 +3,15 @@
     "parser": {
       "syntax": "ecmascript",
       "jsx": true,
-      "numericSeparator": false,
-      "classPrivateProperty": false,
-      "privateMethod": false,
-      "classProperty": false,
+      "dynamicImport": false,
+      "privateMethod": true,
       "functionBind": false,
-      "decorators": false,
-      "decoratorsBeforeExport": false
+      "exportDefaultFrom": false,
+      "exportNamespaceFrom": false,
+      "decorators": true,
+      "decoratorsBeforeExport": false,
+      "topLevelAwait": false,
+      "importMeta": false
     },
     "experimental": {
          "plugins": [

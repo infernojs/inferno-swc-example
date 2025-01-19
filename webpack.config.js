@@ -1,4 +1,4 @@
-import {dirname, join} from "path";
+import {dirname, join, resolve} from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import {fileURLToPath} from 'url';
 
@@ -43,13 +43,23 @@ export default {
         ],
     },
     resolve : {
-        extensions: [".tsx", ".ts", ".js", ".jsx"],
+        extensions: [".tsx", ".ts", ".js"],
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: join(__dirname, 'public/index.html'),
-        }),
+        })
     ],
+    /*
+     * Define the index.html file to be ignored from the HTTP cache
+     * then add the content-hash to the output filename,
+     * this way latest bundle will always be loaded and the bundle will be cached
+     */
+    output: {
+        filename: '[name].[contenthash].js',
+        path: resolve(__dirname, 'dist'),
+        clean: true,
+    },
     devServer: {
         port: 3000,
         liveReload: true,

@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "newLine": "LF",
+    "noUnusedParameters": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "target": "es2022",
+    "lib": ["DOM", "ES2022"],
+    "module": "esnext",
+    "allowJs": false,
+    "moduleResolution": "node",
+    "preserveConstEnums": true,
+    "outDir": "build",
+    "sourceMap": true,
+    "jsx": "preserve",
+    "jsxFactory": "Inferno.createElement",
+    "jsxFragmentFactory": "Fragment",
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "removeComments": false,
+    "experimentalDecorators": false,
+    "rootDir": "."
+  },
+  "include": [
+    "packages/*/src",
+    "packages/*/__tests__"
+  ]
+}

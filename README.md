@@ -7,3 +7,16 @@ A template for quickly getting Inferno js project up and running using the SWC c
 ```
 npm install
 ```
+
+
+## Building
+
+```
+npm run build
+```
+
+## Running
+
+```
+npm start
+```

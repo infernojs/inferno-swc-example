@@ -1,37 +1,57 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import {dirname, join} from "path";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import {fileURLToPath} from 'url';
 
-module.exports = {
-  mode: 'development',
-  entry: './src/index.js',
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          // `.swcrc` can be used to configure swc
-          loader: 'swc-loader',
-        },
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.(jpe?g|gif|png|svg)/,
-        type: 'asset/resource',
-      },
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+export default {
+    mode: 'development',
+    entry: './src/index.tsx',
+    module: {
+        rules: [
+            {
+                test: /\.(ts|tsx|js|jsx)$/,
+                exclude: /(node_modules)/,
+                use: {
+                    loader: 'swc-loader',
+                    options: {
+                        "jsc": {
+                            "parser": {
+                                "syntax": "typescript",
+                                "tsx": true,
+                            },
+                            "experimental": {
+                                "plugins": [
+                                    ["swc-plugin-inferno", {}]
+                                ],
+                            },
+                            "target": "es2022",
+                            "loose": true
+                        }
+                    }
+                }
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+            },
+            {
+                test: /\.(jpe?g|gif|png|svg)/,
+                type: 'asset/resource',
+            },
+        ],
+    },
+    resolve : {
+        extensions: [".tsx", ".ts", ".js", ".jsx"],
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: join(__dirname, 'public/index.html'),
+        }),
     ],
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'public/index.html'),
-    }),
-  ],
-  devServer: {
-    //contentBase: path.join(__dirname, "dist"),
-    port: 3000,
-    liveReload: true,
-  },
+    devServer: {
+        port: 3000,
+        liveReload: true,
+    },
 };

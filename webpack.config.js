@@ -78,7 +78,7 @@ export default {
     output: {
         filename: 'js/[name].[contenthash].js',
         path: resolve(__dirname, 'dist'),
-        publicPath: isProduction ? 'https://YOUR-DOMAIN/' : '',
+        publicPath: isProduction ? 'https://YOUR-DOMAIN/' : '/',
         clean: true,
     },
     devServer: {

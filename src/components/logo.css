@@ -1,0 +1,9 @@
+/*
+This is just an example to load custom styles
+It is recommended to use TailwindCSS for basic styling
+*/
+.inferno-logo {
+    background: #fff;
+    border-radius: 100%;
+    padding: 2rem;
+}

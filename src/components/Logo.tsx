@@ -1,3 +1,5 @@
+import './logo.css'; // This is just an example to load custom styles
+
 export default ({ width, height }) => {
     return (
         <svg

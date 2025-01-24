@@ -1,9 +1,15 @@
 import {dirname, join, resolve} from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import {fileURLToPath} from 'url';
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import ESLintWebpackPlugin from "eslint-webpack-plugin";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+let isProduction = process.env.NODE_ENV === 'production';
+
+console.log("Building isProduction = ", isProduction);
 
 export default {
     mode: 'development',
@@ -34,7 +40,16 @@ export default {
             },
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader'],
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: '/css/',
+                        },
+                    },
+                    'css-loader',
+                    'postcss-loader',
+                ],
             },
             {
                 test: /\.(jpe?g|gif|png|svg)/,
@@ -43,25 +58,32 @@ export default {
         ],
     },
     resolve : {
-        extensions: [".tsx", ".ts", ".js"],
+        extensions: [".tsx", ".ts", ".js", ".jsx"],
+        alias: {
+            'inferno': isProduction ? 'inferno/dist/index.mjs' : 'inferno/dist/index.dev.mjs',
+        }
     },
     plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'css/[name].[hash].css',
+        }),
         new HtmlWebpackPlugin({
             template: join(__dirname, 'public/index.html'),
-        })
+        }),
+        new ESLintWebpackPlugin({
+            extensions: ['ts', 'tsx', 'js', 'jsx'],
+            configType: 'flat'
+        }),
     ],
-    /*
-     * Define the index.html file to be ignored from the HTTP cache
-     * then add the content-hash to the output filename,
-     * this way latest bundle will always be loaded and the bundle will be cached
-     */
     output: {
-        filename: '[name].[contenthash].js',
+        filename: 'js/[name].[contenthash].js',
         path: resolve(__dirname, 'dist'),
+        publicPath: isProduction ? 'https://YOUR-DOMAIN/' : '',
         clean: true,
     },
     devServer: {
-        port: 3000,
+        port: 5110,
         liveReload: true,
+        historyApiFallback: true,
     },
 };

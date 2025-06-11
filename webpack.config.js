@@ -11,6 +11,7 @@ let isProduction = process.env.NODE_ENV === 'production';
 
 console.log("Building isProduction = ", isProduction);
 
+
 export default {
     mode: 'development',
     entry: './src/index.tsx',
@@ -70,10 +71,10 @@ export default {
         new HtmlWebpackPlugin({
             template: join(__dirname, 'public/index.html'),
         }),
-        new ESLintWebpackPlugin({
-            extensions: ['ts', 'tsx', 'js', 'jsx'],
-            configType: 'flat'
-        }),
+        // new ESLintWebpackPlugin({
+        //     extensions: ['ts', 'tsx', 'js', 'jsx'],
+        //     configType: 'flat'
+        // }),
     ],
     output: {
         filename: 'js/[name].[contenthash].js',
